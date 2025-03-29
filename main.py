@@ -15,9 +15,15 @@ def main():
     # Initialize Screen Object
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
+    # Group Creation
+    updatable = pygame.sprite.Group()
+    drawable = pygame.sprite.Group()
+
     # Create Instance of Player object
+    Player.containers = (updatable, drawable) # Add player class to groups
+
     player = Player(x= SCREEN_WIDTH /2, y= SCREEN_HEIGHT /2)
-    
+
 
     # Main Game Loop
     while True:
@@ -25,8 +31,10 @@ def main():
             if event.type == pygame.QUIT:
                 return
         pygame.Surface.fill(screen, (0,0,0)) # Fill Screen with black
-        player.update(dt)
-        player.draw(screen) # Draw Player
+        for upd in updatable:
+            upd.update(dt)    # Update all objects in updatable group
+        for drw in drawable:
+            drw.draw(screen) # Draw all objects in drawable group
         pygame.display.flip()
 
     # Testing Console Outputs
