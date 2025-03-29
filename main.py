@@ -3,6 +3,11 @@ from constants import *
 
 def main():
     pygame.init()
+    clock = pygame.time.Clock()
+    dt = 0
+    tick_delta = clock.tick(60)
+    dt = delta / 1000
+    
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     while True:
         for event in pygame.event.get():
