@@ -44,6 +44,10 @@ def main():
             upd.update(dt)    # Update all objects in updatable group
         for drw in drawable:
             drw.draw(screen) # Draw all objects in drawable group
+        for asteroid in asteroids:
+            if asteroid.has_colided(player):
+                print("Game over!")
+                return
         pygame.display.flip()
 
     # Testing Console Outputs
