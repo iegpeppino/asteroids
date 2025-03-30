@@ -44,15 +44,25 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
-        pygame.Surface.fill(screen, (0,0,0)) # Fill Screen with black
-        for upd in updatable:
-            upd.update(dt)    # Update all objects in updatable group
-        for drw in drawable:
-            drw.draw(screen) # Draw all objects in drawable group
-        for asteroid in asteroids:
-            if asteroid.has_colided(player):
+        pygame.Surface.fill(screen, (0,0,0))    # Fill Screen with black
+
+        for upd in updatable:    # Update all objects in updatable group
+            upd.update(dt)   
+
+        for drw in drawable:    # Draw all objects in drawable group
+            drw.draw(screen) 
+
+        for asteroid in asteroids:  # Checks collision between asteroids and player
+            if asteroid.has_collided(player):
                 print("Game over!")
                 return
+            
+        for asteroid in asteroids:  # Checks collision between projectiles and asteroids
+            for projectile in projectiles:
+                if asteroid.has_collided(projectile): 
+                    asteroid.split()
+                    projectile.kill()
+
         pygame.display.flip()
 
     # Testing Console Outputs
