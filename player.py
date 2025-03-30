@@ -36,11 +36,13 @@ class Player(CircleShape):
         self.position += forward * PLAYER_SPEED * dt
 
     def shoot(self):
+        self.timer = 0.7
         projectile = Shot(self.position[0], self.position[1])
         projectile.velocity = pygame.Vector2(0,1).rotate(self.rotation) * PLAYER_SHOOT_SPEED
         return projectile
 
     def update(self, dt):
+        self.timer -= dt
         keys = pygame.key.get_pressed()
 
         if keys[pygame.K_a]: # Rotate Left with "a" key
@@ -52,4 +54,6 @@ class Player(CircleShape):
         if keys[pygame.K_s]:
             self.move(-1*dt) # Move Player Backwards with "s" key
         if keys[pygame.K_SPACE]:
+            if self.timer > 0.3: # Checks for timer to limit projectiles
+                return
             self.shoot() # Player shoots projectiles
